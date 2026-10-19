@@ -94,12 +94,12 @@ lib / data**. Ningún componente importa de una página.
 
 ## Despliegue en GitHub Pages
 
-1. Sube el repositorio a GitHub con la rama `main`.
+1. Sube el repositorio a GitHub (rama `main`; el workflow también acepta `Main`).
 2. Ajustes del repo → **Pages** → Source: **GitHub Actions**.
 3. (Opcional) Ajustes → Secrets and variables → Actions → **Variables**:
    define `VITE_WHATSAPP_NUMBER`, `VITE_CONTACT_EMAIL` y `VITE_FORMSPREE_ID`
    con los datos reales del hotel.
-4. Cada push a `main` compila, valida contraste y publica.
+4. Cada push a `main`/`Main` compila, valida contraste y publica.
 
 El workflow calcula solo `VITE_BASE` y `VITE_SITE_URL` a partir del nombre del
 repositorio: las URLs de canonical, sitemap y Open Graph quedan correctas sin

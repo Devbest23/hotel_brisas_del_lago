@@ -1,13 +1,16 @@
 # ============================================================================
 # Build y despliegue automático a GitHub Pages.
-# Cada push a `main` compila el sitio, verifica el contraste WCAG y publica.
+# Cada push a `main` o `Main` compila el sitio, verifica el contraste WCAG y publica.
 # Primera vez: Ajustes → Pages → Source = "GitHub Actions".
 # ============================================================================
 name: Deploy a GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # WHY: acepta `main` y `Main`: GitHub distingue mayúsculas/minúsculas en
+    # nombres de rama, y no queremos que un descuido de nombre deje el sitio
+    # sin desplegar (pasó con la primera subida).
+    branches: [main, Main]
   workflow_dispatch:
 
 permissions:
@@ -39,14 +42,20 @@ jobs:
       - name: Verificar contraste WCAG 2.1 AA (gate de accesibilidad)
         run: npm run check:contrast
 
+      - name: Calcular URL y ruta base del sitio
+        # WHY: se derivan del propio repositorio; el dueño se pasa a minúsculas
+        # (git lo conserva, las URLs no). Así canonical, sitemap.xml y Open
+        # Graph quedan correctos en cualquier cuenta, sin editar archivos.
+        run: |
+          name="${GITHUB_REPOSITORY#*/}"
+          owner="${GITHUB_REPOSITORY%%/*}"
+          echo "VITE_BASE=/${name}/" >> "$GITHUB_ENV"
+          echo "VITE_SITE_URL=https://${owner,,}.github.io/${name}" >> "$GITHUB_ENV"
+
       - name: Compilar el sitio
-        # VITE_BASE y VITE_SITE_URL se calculan del propio repositorio: las URLs
-        # de canonical, sitemap.xml y Open Graph quedan correctas sin editar
-        # archivos. Los demás valores se configuran como Variables del repo
+        # Los datos reales del hotel se configuran como Variables del repo
         # (Settings → Secrets and variables → Actions → Variables).
         env:
-          VITE_BASE: /${{ github.event.repository.name }}/
-          VITE_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           VITE_WHATSAPP_NUMBER: ${{ vars.VITE_WHATSAPP_NUMBER }}
           VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
           VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
