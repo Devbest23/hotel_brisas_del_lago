@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Imagen no disponible">
+  <!-- Respaldo local: se muestra si una fotografía no carga -->
+  <rect width="800" height="600" fill="#003049"/>
+  <circle cx="620" cy="150" r="58" fill="#F6C6C0" opacity="0.85"/>
+  <path d="M0 420 Q200 380 400 420 T800 420 L800 600 L0 600 Z" fill="#0A3B52"/>
+  <path d="M0 478 Q200 438 400 478 T800 478 L800 600 L0 600 Z" fill="#14405A"/>
+  <path d="M0 536 Q200 496 400 536 T800 536 L800 600 L0 600 Z" fill="#0E4C69"/>
+  <text x="400" y="310" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" fill="#F3EFE7">Brisas del Lago</text>
+  <text x="400" y="348" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#A9BAC4">imagen no disponible</text>
+</svg>

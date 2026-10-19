@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Vite + React" />
+
+    <!-- SEO base (la versión por ruta la gestiona el componente <Seo />) -->
+    <title>Brisas del Lago · Hotel boutique frente al Lago de Maracaibo</title>
+    <meta
+      name="description"
+      content="Hotel boutique minimalista a orillas del Lago de Maracaibo. Habitaciones con vista al lago, desayuno incluido y reserva directa sin intermediarios."
+    />
+    <meta name="keywords" content="hotel Maracaibo, hotel frente al lago, Brisas del Lago, reservas Maracaibo, hotel boutique Venezuela" />
+    <meta name="author" content="Hotel Brisas del Lago" />
+
+    <!-- Open Graph / redes sociales (URLs relativas: los scrapers las resuelven contra la URL de la página).
+         El canonical por ruta lo inyecta <Seo /> en tiempo de ejecución (SPA). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hotel Brisas del Lago" />
+    <meta property="og:locale" content="es_VE" />
+    <meta property="og:title" content="Brisas del Lago · Hotel boutique frente al Lago de Maracaibo" />
+    <meta
+      property="og:description"
+      content="Despierta frente al lago. Habitaciones minimalistas, desayuno incluido y reserva directa con confirmación por WhatsApp."
+    />
+    <meta property="og:image" content="og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Colores de la barra del navegador según el tema -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FAF7F2" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#002233" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!--
+      WHY: script anti-destello (FOUC). Se ejecuta ANTES de pintar para aplicar la clase
+      "dark" según (1) preferencia guardada, o (2) preferencia del sistema operativo.
+      Sin framework, sin bloqueo: ~8 líneas inline.
+    -->
+    <script>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('bdl-theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var isDark = stored ? stored === 'dark' : prefersDark
+          if (isDark) document.documentElement.classList.add('dark')
+        } catch (_) {
+          /* localStorage puede fallar en modo privado: se ignora y queda el tema claro */
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Datos estructurados base del hotel (el componente <Seo /> añade los específicos por ruta) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Hotel",
+        "name": "Hotel Brisas del Lago",
+        "description": "Hotel boutique minimalista a orillas del Lago de Maracaibo, Venezuela.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Bella Vista, Sector Costa Norte",
+          "addressLocality": "Maracaibo",
+          "addressRegion": "Zulia",
+          "addressCountry": "VE"
+        },
+        "priceRange": "$65 - $180",
+        "telephone": "+58 414-000 0000"
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

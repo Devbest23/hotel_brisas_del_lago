@@ -1,0 +1,55 @@
+# ============================================================================
+# Archivos que NO deben subirse a GitHub.
+# Regla: se versiona el código fuente y la configuración de ejemplo; lo
+# generado (build, cachés), lo local (entorno, editor) y lo sensible no.
+# ============================================================================
+
+# Dependencias (se reinstalan con `npm ci` en cada máquina y en CI)
+node_modules
+
+# Build y cachés generados
+dist
+dist-ssr
+.vite
+*.tsbuildinfo
+
+# Entorno: los valores reales NUNCA se suben; solo se versiona .env.example
+.env
+.env.*
+!.env.example
+
+# Logs de gestores de paquetes
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Caché de herramientas
+.eslintcache
+node_modules/.cache
+
+# Pruebas y cobertura (aunque aún no haya pruebas en el proyecto)
+coverage
+
+# Editores
+.vscode/*
+!.vscode/extensions.json
+.idea
+.history
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temporales y respaldos
+*.bak
+*.tmp
+*.orig
+*~
+*.sw?

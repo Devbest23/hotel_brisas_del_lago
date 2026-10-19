@@ -1,0 +1,6 @@
+# Este archivo se regenera en cada build con la URL real del despliegue
+# (scripts/generate-sitemap.mjs). El de esta carpeta es solo un respaldo local.
+User-agent: *
+Allow: /
+
+Sitemap: https://TU-USUARIO.github.io/Hotel_Brisas_Del_Lago/sitemap.xml

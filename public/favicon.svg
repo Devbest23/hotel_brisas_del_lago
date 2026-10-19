@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Favicon: olas del lago + monograma -->
+  <rect width="64" height="64" rx="14" fill="#003049"/>
+  <path d="M6 40 Q18 33 30 40 T54 40 T78 40" stroke="#F6C6C0" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M6 50 Q18 43 30 50 T54 50 T78 50" stroke="#AE1F23" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="32" y="27" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="26" fill="#F3EFE7">B</text>
+</svg>

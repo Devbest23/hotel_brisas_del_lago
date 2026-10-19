@@ -1,0 +1,77 @@
+# ============================================================================
+# Build y despliegue automático a GitHub Pages.
+# Cada push a `main` compila el sitio, verifica el contraste WCAG y publica.
+# Primera vez: Ajustes → Pages → Source = "GitHub Actions".
+# ============================================================================
+name: Deploy a GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        # npm ci usa el lockfile (recomendado en CI); si no existiera, instala.
+        run: npm ci || npm install
+
+      - name: Verificar contraste WCAG 2.1 AA (gate de accesibilidad)
+        run: npm run check:contrast
+
+      - name: Compilar el sitio
+        # VITE_BASE y VITE_SITE_URL se calculan del propio repositorio: las URLs
+        # de canonical, sitemap.xml y Open Graph quedan correctas sin editar
+        # archivos. Los demás valores se configuran como Variables del repo
+        # (Settings → Secrets and variables → Actions → Variables).
+        env:
+          VITE_BASE: /${{ github.event.repository.name }}/
+          VITE_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          VITE_WHATSAPP_NUMBER: ${{ vars.VITE_WHATSAPP_NUMBER }}
+          VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
+          VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
+        run: npm run build
+
+      - name: Preparar el artefacto para Pages
+        # 404.html = copia del index: GitHub Pages lo sirve en rutas profundas
+        # (/habitaciones/vista-lago) y el enrutador de React resuelve la vista
+        # correcta al cargar. .nojekyll evita el procesamiento con Jekyll.
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - name: Subir el artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
